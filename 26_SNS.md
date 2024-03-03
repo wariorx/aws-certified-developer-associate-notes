@@ -23,7 +23,7 @@
   * Messages are stored accross multiple datacenters
   * **Delivery retry policy** used if a subscruber is not availalbe
   * Use **DLQ** to preserve messages taht aren't delivered before the retry policy ends
-  * **Message attributes** provide any arbitrary metadata about hte message
+  * **Message attributes** provide any arbitrary metadata about the message
   * **Message filtering** each subscriber receives every message pushed to the queue by default. Subscribers may also define message filtering policies based on  
     * Payload
     * Attributes
