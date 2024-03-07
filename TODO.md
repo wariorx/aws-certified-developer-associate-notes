@@ -20,3 +20,7 @@
 
 # EKS
 * Kurbenetes basics ? 
+  
+# ECS + Cloudwatch / Event bridge
+* Auto-scaling
+* Scheduling 

@@ -47,3 +47,4 @@
 * Android, iOS, React Native, Ionic, Flutter
   
 ## Hosting existing projects
+* TODO: determine if this is relevant for the exam
