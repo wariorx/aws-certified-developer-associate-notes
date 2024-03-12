@@ -24,3 +24,6 @@
 # ECS + Cloudwatch / Event bridge
 * Auto-scaling
 * Scheduling 
+
+# Lambda
+* Lambda @edge
