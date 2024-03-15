@@ -4,6 +4,11 @@
 # DynamoDB
 * provisioning
 * Capacity
+* Streams
+* Scan limit parameters
+* Encryption
+* https://docs.aws.amazon.com/database-encryption-sdk/latest/devguide/client-server-side.html 
+* https://docs.aws.amazon.com/database-encryption-sdk/latest/devguide/what-is-database-encryption-sdk.html
 
 # RDS
 * Aurora + Serverless (ACUs)
@@ -21,7 +26,16 @@
 * Auto-scaling
 * Scheduling 
 
+
 # Lambda
 * Lambda @edge
-* 
+  
 # ACM
+* Private registry
+
+# KMS
+* Generate symmetric vs asymetric use cases
+  
+# SAM
+* Command line quirks
+* Working with code
