@@ -1,10 +1,6 @@
 # S3
 * Bucket replication
 
-# Caching
-* Caching strategies
-* Different caching services
-
 # DynamoDB
 * provisioning
 * Capacity
@@ -27,3 +23,5 @@
 
 # Lambda
 * Lambda @edge
+* 
+# ACM
