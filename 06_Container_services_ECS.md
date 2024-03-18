@@ -46,3 +46,26 @@
     "cpu": "256"
 }
 ```
+
+## Scheduling
+* 2 provided schedulers;
+    * Service scheduler for long-running tasks and applications
+    * Standalone scheduler for batch jobs, scheduled tasks, or single-run tasks
+
+### Service Scheduler
+* Ensures that the desired scheduling strategy is followed and that failing tasks are rescheduled as needed.
+* Replaces tasks considered to be unhealthy via load balancer healthchecks or container health checks. Replacement depends on `desiredCount` and  `maximumPercent`.
+    * The scheduler will start a new task whenever a task becomes unhealthy. If the new task is deemed healthy, it will replace the unhealthy one. Otherwise one of them will be terminated and the process will repeat periodically
+* Available strategies:
+    * **Replica**: replace and maintain the desired number of tasks across the cluster. You may add task replacement strategies and constraints to customize the replacement strategy
+    * **Daemon**: deploy exactly one task on each active container instance that meets all of the task placement constraints that you specify in your cluster. Therefore, there is no need to specify the desired number of tasks, a placement strategy, or use service autoscaling policies 
+
+### Standalone Tasks
+
+### Eventbridge scheduling
+
+
+## Container stragegies
+
+### Sidecar
+https://spacelift.io/blog/kubernetes-sidecar-container#:~:text=A%20sidecar%20container%20can%20implement,load%20on%20the%20primary%20containers.
