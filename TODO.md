@@ -29,6 +29,7 @@
 
 # Lambda
 * Lambda @edge
+* vCPU and increasing capacity
   
 # ACM
 * Private registry

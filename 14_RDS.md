@@ -74,3 +74,5 @@ Both backup options are advised
   * Manage RDS resources
   * Create,delete, and update isntances
 * Encryption: At rest Enabled by default, in transit (TLS) is supported and recommended
+  
+## Aurora Serverless
