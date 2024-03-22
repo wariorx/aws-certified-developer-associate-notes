@@ -1,6 +1,42 @@
 # Cloud Formation
 
+## Failure options
+* **Create** operations set to **Preserve successfully provisioned resource**s preserves the state of successful resources, while failed resources will stay in a failed state until the next update operation is performed.
 
+* **Retry**: rery tempalte operations on faield resources until successful completion or operation failure - good when the template failed not due to template errors but because of race conditions or misconfigurations
+* **Update**: update resources provisioned; create or retry updates on failed resources. If the stack is in a a FAILED state - you must select **Preserve successfully provisioned resources** for stack options to continue updating
+* **Roll back**: rollback changes to the last known stable state
+
+
+## Moving resources between stack
+* First set the **Retain** deletion policy to the resource you want to move to ensure thath te resource is preserved upon being moved
+
+## Exporting resources
+
+## Components of a Template
+```yaml
+AWSTemplateFormatVersion: "version date" CloudFormation template version that the template conforms to
+Description:
+  A text string that describes the template. This section must always follow the template format version section.
+Metadata:
+  Objects that provide additional information about the template.
+Parameters:
+  Values to pass to your template at runtime (when you create or update a stack). You can refer to parameters from the Resources and Outputs sections of the template.
+Rules:
+  Validates a parameter or a combination of parameters passed to a template during a stack creation or stack update.
+Mappings:
+  A mapping of keys and associated values that you can use to specify conditional parameter values, similar to a lookup table. You can match a key to a corresponding value by using the Fn::FindInMap intrinsic function in the Resources and Outputs sections.
+Conditions:
+  Conditions that control whether certain resources are created or whether certain resource properties are assigned a value during stack creation or update. For example, you could conditionally create a resource that depends on whether the stack is for a production or test environment.
+Transform:
+  For serverless applications (also referred to as Lambda-based applications), specifies the version of the AWS Serverless Application Model (AWS SAM) to use. When you specify a transform, you can use AWS SAM syntax to declare resources in your template. The model defines the syntax that you can use and how it's processed.
+
+  You can also use AWS::Include transforms to work with template snippets that are stored separately from the main AWS CloudFormation template. You can store your snippet files in an Amazon S3 bucket and then reuse the functions across multiple templates.
+Resources:
+  Specifies the stack resources and their properties, such as an Amazon Elastic Compute Cloud instance or an Amazon Simple Storage Service bucket. You can refer to resources in the Resources and Outputs sections of the template.
+Outputs:
+  Describes the values that are returned whenever you view your stack's properties. For example, you can declare an output for an S3 bucket name and then call the aws cloudformation describe-stacks AWS CLI command to view the name.
+```
 ## Essential functions
 **Ref**: This function is used to reference other resources within the template. It returns the value of the specified resource.
 
