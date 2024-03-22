@@ -75,4 +75,27 @@ Both backup options are advised
   * Create,delete, and update isntances
 * Encryption: At rest Enabled by default, in transit (TLS) is supported and recommended
   
-## Aurora Serverless
+## Aurora
+* Fully maanged RDS endinge compatible with MySQL and PostgreSSQL
+* Combine the speed and reliability of high-end commerical databases with the cost-efficiency and effectiveness of open-source databases
+* Leverage fast underlying distribyted storage that **grows automatically as needed** up to 128 tebibytes
+* Clustering and replication is automated
+  * **Primary db instance**: supports read and write operations and performs all data modificatiosn to the cluster Volume
+  * **Aurora replica**: connects to the same cluster volume as the primary instance byt supports only read. Up to **15** replicas in addition to the primary instance which can be located in separate AZs and automatic failover
+* You may connect to reader endpoints to reduce load on primary database for read operations with minimal replica lag (compared to RDS replication eventual consistency)
+* Data is by default replicated 6 times accross 3 AZs
+  
+### Aurora Serverless v2
+* On-demand autoscaling configuration for Aurora
+* Automate the process of monitoring the workload and adjusting database capacity as needed
+* Unlike serverless v1 which always doubled capacity on scaling, v2 can incrementally scale based on demand
+* Charge only for the resources the DB consumes
+* Configure capacity scaling by specifying ACUs (Auroa Capacity Units), with a minimum of 0.5 ACus and maximum of 128 ACUs. Each ACU is approximately **2 GiB** of memory, corresponding CPu, and networking
+* You can mix serverless v2 and provisioned capacities if needed
+* Use for
+  * **Variable workloads**
+  * **Multi-tenant applications**
+  * **New applications**
+  * **mixed-used applications** with periodic spikes in traffic
+  * **Capacity planning**
+  * **Development and testing**

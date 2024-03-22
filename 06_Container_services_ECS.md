@@ -14,6 +14,25 @@
 * **Cluster**: logical grouping of services, tasks, and capacity providers in a region
 * **Service**: one or more identical tasks. Are in charge of checking and replacing unhealthy tasks (always running)
 * **Task**: on or more containers. Specify compute, networking, IAM role, and other configurations
+* **Network modes**:
+  * **Host**: most basic mode; the networking of the container is tied directly to the underlying host
+    * The container will receive traffic in the same port as the instance
+    * You can't run more than a single instance of the task on each host
+    * No way to remap container port 
+    * Allows containers to specify the host and connect to private loopback networks
+    * Only supported for **EC2** instances
+  * **Bridge**: use a virtual network bridge to creat a layer betwee nthe host and the networking of the container
+    * Remap a host port to a container port
+    * If port mapping is unspecified, Docker will choose a random unused port for the container to listen to -> ECS will automatically updated load balancer target groups and C loudMap service discovery with the list of task IP and ports
+    * Cons: it's difficult to lock down service to service communcations because services may be assigned to any random unused port
+    * Supported only for **EC2** instances
+  * **AWSVPC**:  ECS creates and manages underlying ENI ( Elastic Network Interface) for each task and each task receives its own private IP addr within the VPC. The ENI is separate from the underlying hosts ENI - and if multiple tasks are run within an instance, each task receives it own ENI
+    * Each task can have different security groups allowing or denying traffic
+    * Supported for both EC2 and Fargate tasks (and required for Fargate)
+    * Compatible with VPCs configured for IPv6 dual stack mode (Ipv4 cannot be disabled) - this allows you to use the Ipv6 space as well for networkimg
+    * Can present additional challenges - see **ENI trunking** for solutions:
+      * Could reach the limit of ENIs that can be attached to an EC2 instance 
+      * IP address exhaustion
 
 ### Compute Options
 * **EC2**: aka Container instances. Offers most control and user responsibility. ECS container agent must be installed on the EC2 instances to be able to work as an ECS cluster. The ECS agent runs in both Windows and Linux AMIs
@@ -51,6 +70,7 @@
 * 2 provided schedulers;
     * Service scheduler for long-running tasks and applications
     * Standalone scheduler for batch jobs, scheduled tasks, or single-run tasks
+* You may also use EventBridge or create a custome scheduler that calls RunTask when needed
 
 ### Service Scheduler
 * Ensures that the desired scheduling strategy is followed and that failing tasks are rescheduled as needed.
@@ -61,11 +81,42 @@
     * **Daemon**: deploy exactly one task on each active container instance that meets all of the task placement constraints that you specify in your cluster. Therefore, there is no need to specify the desired number of tasks, a placement strategy, or use service autoscaling policies 
 
 ### Standalone Tasks
-
-### Eventbridge scheduling
-
-
+* You may have a process call RunTask, allowing for default task placement strategy
+* You may also specify task placement strategies and constraints
+  
 ## Container stragegies
 
 ### Sidecar
-https://spacelift.io/blog/kubernetes-sidecar-container#:~:text=A%20sidecar%20container%20can%20implement,load%20on%20the%20primary%20containers.
+* Deploying components of an application into a separate process or container for isolation and encapsulation
+* Implement peripheral tasks that can be reused by many services as their own standalone components then attach them as a side-car to other taks (IE logging, monitoring, telemetry, etc.)
+* Similar to agents and some daemons
+* Need to specify networking logic for the tasks to communicate with one another - this also adds overhead and complexity
+* Good for implementing common functionality that will be used for applications written in different languages or deployed into different environments
+```json
+[
+     {
+       "name": "my-sidecar-container",
+       "image": "ECR image name",
+       "memory": "256",
+       "cpu": "256",
+       "essential": true,
+       "portMappings": [
+         {
+           "containerPort": "50051",
+           "hostPort": "50051",
+           "protocol": "tcp"
+         }
+       ],
+       "links": [
+         "app"
+       ]
+     },
+     {
+       "name": "app",
+       "image": "<app image URL here>",
+       "memory": "256",
+       "cpu": "256",
+       "essential": true
+     }
+]
+```
