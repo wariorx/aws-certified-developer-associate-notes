@@ -95,6 +95,7 @@
 * **Logging**: Build runs will og events to CloudWatch. Additionaly, if CodePipeline is in use you may also visualize some events there
 
 ### Build SPEC
+* Must be placed at the root of the project or artifact, unless otherwise specified at during the creation of the codecommit instance
 * **Version**: version of the build spec being used; latest is 0.2
 * **Phases** steps on which you can instruct CodeCommit to run commands, These are a set of naemd actions whihc cannot be renamed and additional ones cannot be added
   * **install**
@@ -157,7 +158,66 @@
     artifacts:
     files:
         - target/messageUtil-1.0.jar
+
+    reports:
+    report-group-name-or-arn:
+      files:
+        - location
+        - location
+      base-directory: location
+      discard-paths: no | yes
+      file-format: report-format
+  artifacts:
+    files:
+      - location
+      - location
+    name: artifact-name
+    discard-paths: no | yes
+    base-directory: location
+    exclude-paths: excluded paths
+    enable-symlinks: no | yes
+    s3-prefix: prefix
+    secondary-artifacts:
+      artifactIdentifier:
+        files:
+          - location
+          - location
+        name: secondary-artifact-name
+        discard-paths: no | yes
+        base-directory: location
+      artifactIdentifier:
+        files:
+          - location
+          - location
+        discard-paths: no | yes
+        base-directory: location
+  cache:
+    paths:
+      - path
+      - path
     ```
+
+### Running tests and Test reports
+* You may run tests as steps specified in buildspec, for example
+```yaml
+commands:
+    - echo Running tests for surefire junit
+    - mvn test -f surefire/pom.xml -fn
+    - echo
+    - echo Running tests for cucumber with json plugin
+    - mvn test -Dcucumber.options="--plugin json:target/cucumber-json-report.json" -f cucumber-json/pom.xml -fn
+```
+* Test outputs can be stored in **Test reports and groups**; contain details about tests that are run during builds
+* Supported formats:
+  * Cucumber JSON
+  * JUnit XML 
+  * NUnit XML
+  * NUnit3 XML
+  * TestNG XML
+  * Visual Studio TRX
+* Test reports can be created by adding a **report group name** to a buildspec file - when the build is run and tests are executed, the test reports will be created even if the group does not already exist. If you want to use an existing group, you can also specify the ARN of the report group
+* Reports expire after 30 days. If you want to view them for longer, export them to an S3 bucket 
+
 
 ## CodeArtifact
 * Secure and scalable package management service for development
