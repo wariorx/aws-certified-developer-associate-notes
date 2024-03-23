@@ -14,5 +14,3 @@
 # SAM
 * Command line quirks
 * Working with code
-
-# CloudFormation

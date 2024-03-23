@@ -47,7 +47,7 @@
 When stopped, certain configurations such as instance type can be updated.
    * **Stop-hibernate**: the instance enters teh stopped state, but saves the last information or contenet into memory so the next start will be faster. can only be done if hybernation is turned on and the instance meets hibernation requirements
 **Note:** stopped instances will stil incur charges for any EBS storage used
-5. **Terminate**: the instance stores are erasde and all IP addresses are lst. it can no longer be accessed. As soon as shutting down or terminated statuses are achieved billing stops.
+5. **Terminate**: the instance stores are erased and all IP addresses are lst. it can no longer be accessed. As soon as shutting down or terminated statuses are achieved billing stops.
 
 ## Pricing
 * Choosing the right Instance type for the job a good way to minimize costs.
@@ -58,7 +58,7 @@ When stopped, certain configurations such as instance type can be updated.
    * Applicatiosn being developed or tested in EC2 for the first time
   2. **Spot instance**: When flexible start and end times are an option, spot instances can be used for up to 90% off the on-demand price (they make use of any spare resources on the AWS servers but as such could be terminated at any time)
     * Applciations with flexible start and end times
-    * Applicatiosn taht are only feasible at low compute prices
+    * Applicatiosn that are only feasible at low compute prices
     * Uses with fault-tolerant and stateless workloads 
   3. **Saving Plans**: Flexible pricing models that offers low usage prices for 1 or 3 year term commitment to consistent usage. Applied to EC2, Lambda, and Fargate and provide up to 72% savings. Great for workloads with predicateble and consistent usage such as :
    * Users who want to use different isntance types and solutions acccross different locations
@@ -66,7 +66,7 @@ When stopped, certain configurations such as instance type can be updated.
   4. **Reserved instances**: for applications with steady state usage that might require reserved capacity; save upto 75% compare to on-demand and pay either upfront, partial upfront, or no upfront with either a 1 year or 3 year term commitment. Choose between:
    * Standard Reserved Instances: up to 72% discount and best suited for ssteady-state usage
    * Convertible reserved instances: procide upto 54% discount and the capability to change the attributes of reserved instances if the exchange results in the creation of reserverd instances of equal or greater value.
-   * Scheduled reserved instances: availalbe to launch wihthin a reserved time window for predictable recurring scheduled tasks
+   * Scheduled reserved instances: available to launch wihthin a reserved time window for predictable recurring scheduled tasks
   5. **Dedicated hosts**: Physical server in an Amazon warehouse dedicated to personal use. This allows you to re-use software licenses that would be bound to the server hardware such as a Windows Server, or Oracle database. You can also use them to meet compliance requirements since the hardware is not shared with any other accounts. Integrated with AWS licensen manager.
     * Hourly; aka on demand
     * Reservable for up to 70% off

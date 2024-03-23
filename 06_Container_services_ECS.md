@@ -41,7 +41,7 @@
 * **Fargate Spot**
 
 ### Cluster Actions
-* Laund and/or stop containers
+* Launch and/or stop containers
 * Get cluster state
 * Scale in and out
 * Schedule container placement

@@ -36,6 +36,62 @@
 ### Notifications
 * Create notifiactions on pipeline results using **SNS** notifications. Each notification includes a status message as well as a link to the resources whose event generated the notification
 
+### Actions
+https://docs.aws.amazon.com/codepipeline/latest/userguide/integrations-action-type.html 
+
+### Stages
+* Stages are steps in the pipeline execution, joined together by transitions
+* Initial stage must be initiated by a Trigger - and other stages my require triggers to transition from one to the next
+  * Source Changes
+  * Webhooks
+  * S3 events
+  * Cloudwatch Events
+  * Manual Approval
+  * External event providers
+* New stage executions will `SUPERSEED` currently running executions if they catch up to them. Other options are `QUEUED` and `PARALLEL`
+* Example stage configuration
+```yaml
+- Name: ProdStage
+  Actions:
+    - Name: CreateChangeSet
+      ActionTypeId:
+        Category: Deploy
+        Owner: AWS
+        Provider: CloudFormation
+        Version: '1'
+      InputArtifacts:
+        - Name: TemplateSource
+      Configuration:
+        ActionMode: CHANGE_SET_REPLACE
+        RoleArn: !GetAtt [CFNRole, Arn]
+        StackName: !Ref ProdStackName
+        ChangeSetName: !Ref ChangeSetName
+        TemplateConfiguration: !Sub "TemplateSource::${ProdStackConfig}"
+        TemplatePath: !Sub "TemplateSource::${TemplateFileName}"
+      RunOrder: '1'
+    - Name: ApproveChangeSet
+      ActionTypeId:
+        Category: Approval
+        Owner: AWS
+        Provider: Manual
+        Version: '1'
+      Configuration:
+        NotificationArn: !Ref CodePipelineSNSTopic
+        CustomData: !Sub 'A new change set was created for the ${ProdStackName} stack. Do you want to implement the changes?'
+      RunOrder: '2'
+    - Name: ExecuteChangeSet
+      ActionTypeId:
+        Category: Deploy
+        Owner: AWS
+        Provider: CloudFormation
+        Version: '1'
+      Configuration:
+        ActionMode: CHANGE_SET_EXECUTE
+        ChangeSetName: !Ref ChangeSetName
+        RoleArn: !GetAtt [CFNRole, Arn]
+        StackName: !Ref ProdStackName
+      RunOrder: '3'
+```
 ## Cloud9
 * Cloud-based IDE to write, run, and debug code through your browser
 * Support for 40+ popular langugaes like JS, Python, and PHP
@@ -269,6 +325,7 @@ registry=https://my_domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/n
 ## CodeDeploy
 * Fully managed deployment service that automates software deployments to various compute services such as EC2, ECS, Lambda, or on-prem servers.
 * Automate software deployments -> Build can be triggered whenever new deployable files along with a configuration `AppSec` (defines actions for CodeDeploy to take) files are dropped in an **S3 bucket or Github repo** in an `archieve` bundle file
+* App sec file must be called `appsec.yml` and be located at the root of the deployment package (often a compressed file)
   * Example ECS AppSec file:
     ```yaml
     version: 0.0
@@ -309,8 +366,10 @@ registry=https://my_domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/n
 ### Platforms
 * **EC2/On-Premises**: physical servers that can be Amazon EC2 cloud instances, on prem-servers, or both. Apps compsoed of execuables, configs, images, etc.
   * Code Deploy allows you to manage the way in which traffic is directed to instances by using an in-place or blue/green deployment
+  * You may specify **deployment groups** (set of individual instances) that contain individually tagges isntances and/or instances in AustoScalingGroups
 * **Lambda** updated versions of Lambda functions. You can amange the way in which traffic is shifted to the updated function versions during a deployment from linear, canary, or all-at-once
 * **ECS**: deoky amazon ECS containerized application as a task set. New versions will be deployed to a replacement task set. Manage using canary, linear, or all-at-once configurations
+
 
 ## CodeGuru
 * Services that uses program analysis and machine learning to detect potential defects that are difficult for developers to fund and offers suggestions for improving Java or Python code
