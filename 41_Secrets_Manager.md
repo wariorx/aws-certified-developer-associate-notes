@@ -33,5 +33,12 @@
 * Updates credentials for 2 users in one secret
 * Create a first user, then during rotation clone the user into a second user. The rotation will alternate between the users each time it rotates
 * Appropriate with databases with permissions models where one role owns teh database tables and a second role has permissions to access the database tables
+* Appropriate for applications that require high availability - applications retrieving the secret during rotation will always get a valid set of credentialss
 
 ### Managed rotation
+* AWS services configure and manage rotations in the user's behalf
+* No need to use a Lambda functio nto update the secret and the credentials in the database
+  * ECS Service connect
+  * RDS master user
+  * Aurora master user
+  * Redshift admin passwords

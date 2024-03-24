@@ -8,7 +8,7 @@
 * **Zone storage**: EFS One Zone and One Zone-IA provide additional savings by saving data in a single AZ
 
 # FSx
-* Fully managed service taht offers reliavility, security, scalability, and a broad set of capabilities
+* Fully managed service that offers reliability, security, scalability, and a broad set of capabilities
 * Provides **native compatibility** with third-party file systems
 * Make it convenient and cost-effective to launch, run, and scale hihg-performance file systems in the cloud
 * **Lustre**: Open-source file system designed for apps that require fast storage. Can be linked to data repos in **S3** or on-premise data stores.

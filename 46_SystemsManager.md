@@ -2,7 +2,8 @@
 * Collection of acapabilities that enable visibility and control over AWS resources
 * Make use of the **SSM Aggent** in EC2 instances, edge devices, and on-prem servers to update, manage, and configure resources
   * The agent will process requests from the Systems Manager service in AWS and run them, then report bck with a status and execution information
-
+* For EC2 instances, managed instance profile `EnablesEC2ToAccessSystemsManagerRole ` can be used to grant systems maanger permissions
+* For non-EC2, you can use Service Roles 
 ## Application Management
 
 ### Application Manager
@@ -117,16 +118,96 @@
   
 ## Node Management
 ### Fleet Manager
+* Monitor and manage properties of entire fleet; including
+  * Amazon Elastic Compute Cloud (Amazon EC2) instances
+  * Servers on your own premises (on-premises servers)
+  * AWS IoT Greengrass core devices
+  * AWS IoT and non-AWS edge devices
+
+Virtual machines (VMs), including VMs in other cloud environments
 ### Compliance
+* View compliance history and change tracking for Patch Manager
+* Customize compliance
+* Remediate issues by using Run Command, State manager, and EventBridge
 ### Inventory
+* Collect emtadata from maanaged nodes and store in in central S3 buckets - then use built-in query and analysis tools
+  * Applications
+  * AWS components
+  * Files
+  * IP config
+  * Windows updates
+  * Instance details
+  * services
+  * tags
+  * Windows REgistry
+  * Windows Roles
+  * Custom inventory
+  
 ### Session manager
+* Manage your EC2 instances, edge devices and on-prem servers with either an interactive browser shell or AWS CLI
+* Securely and auditably maange nodes wihtout the need to open inbound ports or manage SSH keys
+* Compy with corporate policies that require controlled access to maange nodes, security practices, and auditable logs
+* Centralized access control to managed nodes using IAM
+* Cross-platofrm windows, Linux, Mac OS
+
+### Run Command
+* Remote and securily maange the configuration of your managed nodes - EC2 instances or non-EC2 machines in hybrid clouds that can be configured for Systems Manager
+* Automate common tasks and perform one-time configurations at scale
+* Remotely run commands on EC2 instances
+
 ### Patch Manager
+* Automate the process of patching nodes
+* Use patch policies to define patching for all accounts in all Regions for an organization
+* Apply patches for both OS and applications - note that major OS version upgrades are not supported
+* Uses **patch baselines** for auto-approving patches within days of hteir release in additional to lists of approved and rejected patches
+* Generate compliance reports after running Scan operations on nodes on the fleet
+* **Scan and Install** operations methods:
+  *  **Patch policy configured in Quick Setup** – Based on integration with AWS Organizations, a single patch policy can define patching schedules and patch baselines for an entire organization
+  *  Host Management option configured in Quick Setup – Host Management configurations are also supported by integration with AWS Organizations, making it possible to run a patching operation for up to an entire Organization
+  * **Maintenance window to run a patch Scan or Install task** – A maintenance window, which you set up in the Systems Manager capability called Maintenance Windows, can be configured to run different types of tasks on a schedule you define. A Run Command-type task can be used to run Scan or Scan and install 
+  * **On-demand 'Patch now'** operation in Patch Manager – The Patch now option lets you bypass schedule setups when you need to patch managed nodes as quickly as possible. Using Patch now, you specify whether to run Scan or Scan and install operation and which managed nodes to run the operation on
+
 ### State Manager
+* Secure and scalable configuration amangement service that automates the process of leeping maanged nodes in a user-defined state
+* Bootstrap nodes with start-up software
+* Download and update agents on a defined schedule
+* configure network settings
+* Join nodes to a Microsoft AD domain
+* Run scripts on Linux, Windows, and macOS
+* Use **Automation with State Manager** to manage configuration drifts
+
+### Distributor
+* Package and publish software nodes
+* Package own software or use Distributor to find and publish AWS-provided packages such as the Cloudwatch Agent or third party agents
+* Install packages as a one-time operation (Run command) or on a schedule (State Manager)
+* Control pacakge access accross groups of managed instances
+* Automate deployments
+* Re-install packages and perform inplace updates
 
 ## Operations Management
+### Incident manager
+* manage incidents occurring in AWS applications
+* Combines user engagements, escalations, runbooks, response plans, chat channels, and post-incident analysis
+* Mitigate and ecover from incidents affecting applications hosted on AWS
+* Create automated plans for engaging response teams
+* Provide relevant troubleshooting data
+* Enable automated response actions in runbooks
+* Provide methods to collaborate with stakeholders
+* Detect incidents by configuring Cloudwatch Alarms and Eventbridge evnets
+* Post-incident analytics to identify inprovements on responses
+  
 ### Explorer
-
-### Change Manager
+* Operations dashboard that reports information about AWS resources
+* Display aggregated views of operations data for AWS accoutns accross regions
+* Includes metadata about managed nodes in multicloud enviromnets
+* Aggregates information provided by other systems manager capabilities
 
 ### OpsCenter
+* Provides central location where operations engineers can manage operational work items related to AWS resources
+* OpsItem is any operational issue or interruption that needs investigation and remediation - it includes the relevant information such as name or ID required to solve an evnet
+* Integrate with othe AWS services like Config, CloudTrail, and Eventbridge
+
+* Investigate and remediate issues with on-prem managed nodes configured with systems manager
+* 
+
 

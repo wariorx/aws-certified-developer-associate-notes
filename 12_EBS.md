@@ -1,5 +1,5 @@
 # EC2 Instance Storage
-* Temporari block-level storage for an instance.
+* Temporary block-level storage for an instance.
 * Storage is located on disks taht are physically attached to the host computer; therefore **the lifecycle of the data is tied to the lifecycle of the EC2 instance** aka deleting OR stopping instance = deleting storage
 * Considered ephimeral storage
 * Ideal for applications that **replicate data to other EC2 instances** such as Hadoop clusters, where the **speed** of locally attached volumes is required and **resiliency of distributed data** hepls achieve high-performance
